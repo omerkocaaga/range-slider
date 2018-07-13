@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import './RangeSlider.scss'
-import './App.css'
+import './RangeSlider.css'
 
 class RangeSlider extends Component {
   constructor (props) {
