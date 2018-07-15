@@ -1,11 +1,11 @@
 .slider-container {
   margin: 20px; }
-  .slider-container .rangeBar {
+  .slider-container .range-bar {
     position: absolute;
     width: 200px;
     height: 10px;
     background-color: blanchedalmond; }
-  .slider-container .dot {
+  .slider-container .pin {
     position: relative;
     top: 0;
     left: 0;

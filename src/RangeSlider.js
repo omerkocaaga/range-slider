@@ -1,30 +1,69 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react'
+import Knob from './components/Knob'
+import Track from './components/Track'
 import './RangeSlider.css'
 
-class RangeSlider extends Component {
+class RangeSlider extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      slots: 20,
-      default: 0
+      dragging: false,
+      posX: 0
     }
-    this.updateSlider = this.updateSlider.bind(this)
-    this.myRef = React.createRef()
+    this.handleMouseMove = this.handleMouseMove.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
+    // console.log(props)
   }
 
-  updateSlider () {
-    const domElement = ReactDOM.findDOMNode(this.refs.rangeBar)
-    console.log(domElement)
+  handleMouseMove (event) {
+    const { dragging } = this.state
+    const posX = event.clientX - 20
+    if (dragging) {
+      this.setState({
+        posX: posX
+      })
+    }
   }
+  handleMouseUp (event) {
+    event.preventDefault()
+    console.log('up')
+    this.setState({
+      dragging: false
+    })
+  }
+  handleMouseDown (event) {
+    event.preventDefault()
+    console.log('down')
+    this.setState({
+      dragging: true
+    })
+  }
+
   render () {
+    console.log(this.state.dragging)
     return (
-      <div ref='container' className='slider-container'>
-        <div onClick={this.updateSlider} className='rangeBar' />
-        <div ref='pin' className='dot' />
+      <div
+        onMouseMove={event => {
+          this.handleMouseMove(event)
+        }}
+        className='slider-container'
+      >
+        <Track />
+        <Knob
+          handleMouseDown={this.handleMouseDown}
+          handleMouseUp={this.handleMouseUp}
+          posX={this.state.posX}
+        />
       </div>
     )
   }
 }
 
 export default RangeSlider
+// onMouseDown={event => {
+//   this.handleMouseDown(event)
+// }}
+// onMouseUp={event => {
+//   this.handleMouseUp(event)
+// }}
