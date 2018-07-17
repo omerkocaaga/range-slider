@@ -4,7 +4,7 @@ class Track extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      trackWidth: 200
+      trackWidth: 300
     }
   }
   render () {

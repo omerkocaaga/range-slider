@@ -15,7 +15,12 @@ class RangeSlider extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     // console.log(props)
   }
-
+  componentDidMount () {
+    window.addEventListener('mouseup', this.handleMouseUp)
+  }
+  componentWillUnmount () {
+    window.removeEventListener('mouseup', this.handleMouseUp)
+  }
   handleMouseMove (event) {
     const { dragging } = this.state
     const posX = event.clientX - 20
@@ -50,11 +55,7 @@ class RangeSlider extends React.Component {
         className='slider-container'
       >
         <Track />
-        <Knob
-          handleMouseDown={this.handleMouseDown}
-          handleMouseUp={this.handleMouseUp}
-          posX={this.state.posX}
-        />
+        <Knob handleMouseDown={this.handleMouseDown} posX={this.state.posX} />
       </div>
     )
   }
