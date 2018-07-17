@@ -61,9 +61,3 @@ class RangeSlider extends React.Component {
 }
 
 export default RangeSlider
-// onMouseDown={event => {
-//   this.handleMouseDown(event)
-// }}
-// onMouseUp={event => {
-//   this.handleMouseUp(event)
-// }}
