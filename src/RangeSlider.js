@@ -1,32 +1,34 @@
 import React from 'react'
 import Knob from './components/Knob'
 import Track from './components/Track'
-import './RangeSlider.css'
 
 class RangeSlider extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       dragging: false,
-      posX: 0
+      posX: 0,
+      trackWidth: 300,
+      knobWidth: 20
     }
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
-    // console.log(props)
   }
   componentDidMount () {
     window.addEventListener('mouseup', this.handleMouseUp)
+    window.addEventListener('mousemove', this.handleMouseMove)
   }
   componentWillUnmount () {
     window.removeEventListener('mouseup', this.handleMouseUp)
+    window.removeEventListener('mousemove', this.handleMouseMove)
   }
   handleMouseMove (event) {
-    const { dragging } = this.state
-    const posX = event.clientX - 20
+    const { dragging, trackWidth, knobWidth } = this.state
+    const posX = event.clientX - knobWidth
     if (dragging) {
       this.setState({
-        posX: posX
+        posX: posX > trackWidth ? trackWidth - knobWidth : posX
       })
     }
   }
@@ -46,16 +48,20 @@ class RangeSlider extends React.Component {
   }
 
   render () {
-    console.log(this.state.dragging)
+    const { trackWidth = 300, posX = 0, knobWidth = 20 } = this.state
     return (
       <div
         onMouseMove={event => {
           this.handleMouseMove(event)
         }}
-        className='slider-container'
+        style={{ margin: 20 }}
       >
-        <Track />
-        <Knob handleMouseDown={this.handleMouseDown} posX={this.state.posX} />
+        <Track trackWidth={trackWidth} />
+        <Knob
+          handleMouseDown={this.handleMouseDown}
+          posX={posX}
+          knobWidth={knobWidth}
+        />
       </div>
     )
   }
